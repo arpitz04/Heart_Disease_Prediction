@@ -1,13 +1,11 @@
 import numpy as np
 import pickle
 import streamlit as st
+import os
 
-
-loaded_model = pickle.load(open("trained_model.sav", 'rb'))
-
-
-
-
+# Load the trained model using relative path (works locally and on Streamlit Cloud)
+model_path = os.path.join(os.path.dirname(__file__), 'trained_model.sav')
+loaded_model = pickle.load(open(model_path, 'rb'))
 
 def heart_disease_prediction(input_data):
     input_data_as_numpy_array = np.asarray(input_data)
@@ -19,10 +17,8 @@ def heart_disease_prediction(input_data):
     else:
         return 'The person has heart disease'
 
-
 def main():
     st.title('Heart Disease Prediction Web App')
-    
     
     age = st.text_input('Age')
     sex = st.text_input('Sex (1 = male; 0 = female)')
